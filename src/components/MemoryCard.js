@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   text: {
+    fontFamily: "unownFont",
     fontSize: 40,
     color: "#bb86fc",
   },

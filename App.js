@@ -2,7 +2,17 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image } from "react-native";
 import MemoryCard from "./src/components/MemoryCard";
 import { cards } from "./src/utils/cards";
+import { useFonts } from "expo-font";
+
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    unownFont: require("./assets/fonts/Unown-OVEwA.ttf"),
+    pokemonSolidNormal: require("./assets/fonts/PokemonSolidNormal-xyWR.ttf"),
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Memory Game!</Text>
@@ -25,6 +35,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "#ffffff",
+    fontFamily: "pokemonSolidNormal",
   },
   board: {
     flexDirection: "row",
