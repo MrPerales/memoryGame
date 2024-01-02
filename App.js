@@ -1,11 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View, Image } from "react-native";
+import MemoryCard from "./src/components/MemoryCard";
+import { cards } from "./src/utils/cards";
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Text style={styles.title}>Memory Game!</Text>
+      {cards.map((card, index) => (
+        <MemoryCard key={index} card={card} />
+      ))}
+      <StatusBar style="light" />
     </View>
   );
 }
@@ -13,8 +17,11 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#121212",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  title: {
+    color: "#ffffff",
   },
 });
