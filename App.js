@@ -6,9 +6,11 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Memory Game!</Text>
-      {cards.map((card, index) => (
-        <MemoryCard key={index} card={card} />
-      ))}
+      <View style={styles.board}>
+        {cards.map((card, index) => (
+          <MemoryCard key={index} card={card} />
+        ))}
+      </View>
       <StatusBar style="light" />
     </View>
   );
@@ -23,5 +25,11 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "#ffffff",
+  },
+  board: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+    justifyContent: "center",
   },
 });
