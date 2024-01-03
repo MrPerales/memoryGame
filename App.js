@@ -1,9 +1,10 @@
+import { StyleSheet, Text, View, Button } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Image, Button } from "react-native";
+import { useFonts } from "expo-font";
 import MemoryCard from "./src/components/MemoryCard";
 import { cards } from "./src/utils/cards";
-import { useFonts } from "expo-font";
-import { useEffect, useState } from "react";
 import shuffle from "./src/utils/shuffle";
 
 export default function App() {
@@ -50,28 +51,30 @@ export default function App() {
     return <Text>Loading...</Text>;
   }
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>
-        {didPlayerWin() ? "Congratulation" : "Memory Game!"}
-      </Text>
-      <Text style={styles.score}>Score:{score}</Text>
-      <View style={styles.board}>
-        {board.map((card, index) => {
-          const isTurnedOver =
-            selectedCard.includes(index) || matchedCards.includes(index);
-          return (
-            <MemoryCard
-              isTurnedOver={isTurnedOver}
-              onPress={() => handleTapCard(index)}
-              key={index}
-              card={card}
-            />
-          );
-        })}
+    <NavigationContainer>
+      <View style={styles.container}>
+        <Text style={styles.title}>
+          {didPlayerWin() ? "Congratulation" : "Memory Game!"}
+        </Text>
+        <Text style={styles.score}>Score:{score}</Text>
+        <View style={styles.board}>
+          {board.map((card, index) => {
+            const isTurnedOver =
+              selectedCard.includes(index) || matchedCards.includes(index);
+            return (
+              <MemoryCard
+                isTurnedOver={isTurnedOver}
+                onPress={() => handleTapCard(index)}
+                key={index}
+                card={card}
+              />
+            );
+          })}
+        </View>
+        {didPlayerWin() && <Button onPress={resetGame} title="reset" />}
+        <StatusBar style="light" />
       </View>
-      {didPlayerWin() && <Button onPress={resetGame} title="reset" />}
-      <StatusBar style="light" />
-    </View>
+    </NavigationContainer>
   );
 }
 
