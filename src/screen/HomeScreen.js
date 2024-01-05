@@ -1,9 +1,10 @@
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet, Modal, Alert } from "react-native";
 import { useEffect, useState } from "react";
 import React from "react";
 import MemoryCard from "../components/MemoryCard";
 import { cards } from "../utils/cards";
 import shuffle from "../utils/shuffle";
+import ModalWin from "../components/ModalWin";
 
 export default function HomeScreen() {
   // cards
@@ -16,7 +17,8 @@ export default function HomeScreen() {
     if (selectedCard.length >= 2 || selectedCard.includes(index)) return;
     setSelectedCard([...selectedCard, index]);
   };
-  const didPlayerWin = () => matchedCards.length === board.length;
+  // const didPlayerWin = () => matchedCards.length === board.length;
+  const didPlayerWin = matchedCards.length === board.length ? true : false;
   const resetGame = () => {
     setBoard(() => shuffle([...cards, ...cards]));
     setSelectedCard([]);
@@ -44,7 +46,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
-        {didPlayerWin() ? "Congratulation" : "Memory Game!"}
+        {didPlayerWin ? "Congratulation" : "Memory Game!"}
       </Text>
       <Text style={styles.score}>Score:{score}</Text>
       <View style={styles.board}>
@@ -61,8 +63,19 @@ export default function HomeScreen() {
           );
         })}
       </View>
-      {/* change to modal */}
-      {didPlayerWin() && <Button onPress={resetGame} title="reset" />}
+      {/*if you Win open modal */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={didPlayerWin}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed");
+        }}
+      >
+        <View style={styles.modalView}>
+          <ModalWin resetGame={resetGame} />
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -86,5 +99,11 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     gap: 10,
     justifyContent: "center",
+  },
+  // modal styles
+  modalView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
