@@ -5,13 +5,14 @@ import MemoryCard from "../components/MemoryCard";
 import { cards } from "../utils/cards";
 import shuffle from "../utils/shuffle";
 import ModalWin from "../components/ModalWin";
+import useStateContext from "../hooks/useStateContext";
 
 export default function HomeScreen() {
   // cards
   const [board, setBoard] = useState(() => shuffle([...cards, ...cards]));
   const [selectedCard, setSelectedCard] = useState([]);
   const [matchedCards, setMatchedCards] = useState([]);
-  const [score, setScore] = useState(0);
+  const { score, points } = useStateContext();
 
   const handleTapCard = (index) => {
     if (selectedCard.length >= 2 || selectedCard.includes(index)) return;
@@ -23,7 +24,7 @@ export default function HomeScreen() {
     setBoard(() => shuffle([...cards, ...cards]));
     setSelectedCard([]);
     setMatchedCards([]);
-    setScore(0);
+    points(0);
   };
   useEffect(() => {
     if (selectedCard.length < 2) return;
@@ -31,13 +32,13 @@ export default function HomeScreen() {
     if (board[selectedCard[0]] === board[selectedCard[1]]) {
       setMatchedCards([...matchedCards, ...selectedCard]);
       setSelectedCard([]);
-      setScore(score + 10);
+      points(score + 10);
     } else {
       setTimeout(() => {
         setSelectedCard([]);
         // wrong card :(
         if (score > 0) {
-          setScore(score - 2);
+          points(score - 2);
         }
       }, 1000);
     }

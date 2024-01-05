@@ -1,12 +1,14 @@
 import { View, Text, Pressable, StyleSheet, TextInput } from "react-native";
 import React, { useState } from "react";
+import useStateContext from "../hooks/useStateContext";
 
 export default function ModalWin({ resetGame }) {
+  const { score } = useStateContext();
   return (
     <View style={styles.modalInformation}>
       <View>
         <Text style={styles.txtModal}>🎉 Congratulation 🎉</Text>
-        <Text style={styles.txtModal}>Your score was :{/**score*/}</Text>
+        <Text style={styles.txtModal}>Your score was :{score}</Text>
       </View>
       <View style={styles.inputContainer}>
         <TextInput
