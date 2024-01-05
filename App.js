@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import NavigationTab from "./src/navigation/NavigationTab";
+import StatesProvider from "./src/context/context";
 
 export default function App() {
   // fonts
@@ -15,8 +16,10 @@ export default function App() {
   }
   return (
     <NavigationContainer>
-      <NavigationTab></NavigationTab>
-      <StatusBar style="light" />
+      <StatesProvider>
+        <NavigationTab></NavigationTab>
+        <StatusBar style="light" />
+      </StatesProvider>
     </NavigationContainer>
   );
 }
