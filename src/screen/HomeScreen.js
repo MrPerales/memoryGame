@@ -2,13 +2,14 @@ import { View, Text, StyleSheet, Modal, Alert } from "react-native";
 import { useEffect, useState } from "react";
 import React from "react";
 import MemoryCard from "../components/MemoryCard";
-import { cards } from "../utils/cards";
+import randomCards from "../utils/cards";
 import shuffle from "../utils/shuffle";
 import ModalWin from "../components/ModalWin";
 import useStateContext from "../hooks/useStateContext";
 
 export default function HomeScreen() {
   // cards
+  const cards = randomCards();
   const [board, setBoard] = useState(() => shuffle([...cards, ...cards]));
   const [selectedCard, setSelectedCard] = useState([]);
   const [matchedCards, setMatchedCards] = useState([]);
