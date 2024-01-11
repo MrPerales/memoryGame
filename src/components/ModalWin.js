@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import useStateContext from "../hooks/useStateContext";
 
 export default function ModalWin({ resetGame }) {
-  const { score } = useStateContext();
+  const { score, name, setName } = useStateContext();
   return (
     <View style={styles.modalInformation}>
       <View>
@@ -16,6 +16,8 @@ export default function ModalWin({ resetGame }) {
           placeholder="nickname"
           style={styles.TxtInput}
           maxLength={3}
+          value={name}
+          onChangeText={(name) => setName(name)}
         />
       </View>
       {/*SOON  :D */}

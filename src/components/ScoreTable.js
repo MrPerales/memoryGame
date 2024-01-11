@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
 
-export default function ScoreTable({ position }) {
+export default function ScoreTable({ position, playerName, playerScore }) {
   const positionName = (position) => {
     if (position === 1) {
       return "ST";
@@ -34,8 +34,10 @@ export default function ScoreTable({ position }) {
       <Text style={[styles.text, positionStyle(position)]}>
         {`${position} ${positionName(position)}`}
       </Text>
-      <Text style={[styles.text, positionStyle(position)]}>99999 PTS</Text>
-      <Text style={[styles.text, positionStyle(position)]}>AAA</Text>
+      <Text style={[styles.text, positionStyle(position)]}>
+        {playerScore} PTS
+      </Text>
+      <Text style={[styles.text, positionStyle(position)]}>{playerName}</Text>
     </View>
   );
 }

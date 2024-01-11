@@ -6,6 +6,7 @@ import randomCards from "../utils/cards";
 import shuffle from "../utils/shuffle";
 import ModalWin from "../components/ModalWin";
 import useStateContext from "../hooks/useStateContext";
+import { addScoreOnStorage } from "../utils/storage";
 
 export default function HomeScreen() {
   // cards
@@ -13,7 +14,7 @@ export default function HomeScreen() {
   const [board, setBoard] = useState(() => shuffle([...cards, ...cards]));
   const [selectedCard, setSelectedCard] = useState([]);
   const [matchedCards, setMatchedCards] = useState([]);
-  const { score, points } = useStateContext();
+  const { score, points, name } = useStateContext();
 
   const handleTapCard = (index) => {
     if (selectedCard.length >= 2 || selectedCard.includes(index)) return;
@@ -22,6 +23,7 @@ export default function HomeScreen() {
   // const didPlayerWin = () => matchedCards.length === board.length;
   const didPlayerWin = matchedCards.length === board.length ? true : false;
   const resetGame = () => {
+    addScoreOnStorage(name, score);
     setBoard(() => shuffle([...cards, ...cards]));
     setSelectedCard([]);
     setMatchedCards([]);
