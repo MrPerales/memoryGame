@@ -23,14 +23,19 @@ export default function ScoreScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>Best Players</Text>
       <ScrollView style={styles.tableScoreContainer}>
-        {bestPlayers?.map((player, index) => (
-          <ScoreTable
-            key={index}
-            position={index + 1}
-            playerName={player.nickname}
-            playerScore={player.score}
-          />
-        ))}
+        {bestPlayers?.map((player, index) => {
+          // render TOP 10
+          if (index < 10) {
+            return (
+              <ScoreTable
+                key={index}
+                position={index + 1}
+                playerName={player.nickname}
+                playerScore={player.score}
+              />
+            );
+          }
+        })}
       </ScrollView>
     </View>
   );

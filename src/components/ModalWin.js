@@ -1,5 +1,5 @@
 import { View, Text, Pressable, StyleSheet, TextInput } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import useStateContext from "../hooks/useStateContext";
 
 export default function ModalWin({ resetGame }) {
@@ -24,7 +24,11 @@ export default function ModalWin({ resetGame }) {
       {/* <Pressable style={styles.buttonModal} onPress={resetGame}>
         <Text style={styles.pressableTxt}>Next Level</Text>
       </Pressable> */}
-      <Pressable style={styles.buttonModal} onPress={resetGame}>
+      <Pressable
+        style={styles.buttonModal}
+        onPress={resetGame}
+        disabled={name.length === 0}
+      >
         <Text style={styles.pressableTxt}>Reset Game</Text>
       </Pressable>
     </View>
