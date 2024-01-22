@@ -1,11 +1,28 @@
-import { View, Text, Pressable, StyleSheet, TextInput } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  Pressable,
+  StyleSheet,
+  TextInput,
+  Animated,
+} from "react-native";
+import React, { useEffect, useRef } from "react";
 import useStateContext from "../hooks/useStateContext";
 
 export default function ModalWin({ resetGame }) {
   const { score, name, setName } = useStateContext();
+  const animation = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(animation, {
+      toValue: 3,
+      duration: 3500,
+      useNativeDriver: true,
+    }).start();
+  }, [animation]);
+
   return (
-    <View style={styles.modalInformation}>
+    <Animated.View style={[styles.modalInformation, { opacity: animation }]}>
       <View>
         <Text style={styles.txtModal}>🎉 Congratulation 🎉</Text>
         <Text style={styles.txtModal}>Your score was :{score}</Text>
@@ -31,7 +48,7 @@ export default function ModalWin({ resetGame }) {
       >
         <Text style={styles.pressableTxt}>Reset Game</Text>
       </Pressable>
-    </View>
+    </Animated.View>
   );
 }
 const styles = StyleSheet.create({
