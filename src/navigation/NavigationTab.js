@@ -1,8 +1,8 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/FontAwesome5";
-import HomeScreen from "../screen/HomeScreen";
 import ScoreScreen from "../screen/ScoreScreen";
+import HomeNavigation from "./HomeNavigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -20,14 +20,14 @@ export default function NavigationTab() {
       }}
     >
       <Tab.Screen
-        name="Home"
+        name="HomeNavigation"
         options={{
           tabBarLabel: "Game",
           tabBarIcon: ({ color, size }) => (
             <Icon name="gamepad" color={color} size={size} />
           ),
         }}
-        component={HomeScreen}
+        component={HomeNavigation}
       />
       <Tab.Screen
         name="Score"
