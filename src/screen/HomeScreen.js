@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, Modal, Alert } from "react-native";
-import { useEffect, useState } from "react";
+import { View, Text, StyleSheet, Modal, Alert, Animated } from "react-native";
+import { useEffect, useRef, useState } from "react";
 import React from "react";
 import MemoryCard from "../components/MemoryCard";
 import randomCards from "../utils/cards";
@@ -47,6 +47,17 @@ export default function HomeScreen() {
     }
   }, [selectedCard]);
 
+  // animated
+  const flipAnimation = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(flipAnimation, {
+      toValue: 180,
+      duration: 2000,
+      useNativeDriver: true,
+    }).start();
+  }, [flipAnimation]); ///
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
@@ -58,12 +69,26 @@ export default function HomeScreen() {
           const isTurnedOver =
             selectedCard.includes(index) || matchedCards.includes(index);
           return (
-            <MemoryCard
-              isTurnedOver={isTurnedOver}
-              onPress={() => handleTapCard(index)}
+            <Animated.View
               key={index}
-              card={card}
-            />
+              style={{
+                transform: [
+                  {
+                    rotateY: flipAnimation.interpolate({
+                      inputRange: [0, 180],
+                      outputRange: ["0deg", "360deg"],
+                    }),
+                  },
+                ],
+              }}
+            >
+              <MemoryCard
+                isTurnedOver={isTurnedOver}
+                onPress={() => handleTapCard(index)}
+                key={index}
+                card={card}
+              />
+            </Animated.View>
           );
         })}
       </View>
