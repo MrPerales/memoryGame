@@ -7,14 +7,33 @@ import shuffle from "../utils/shuffle";
 import ModalWin from "../components/ModalWin";
 import useStateContext from "../hooks/useStateContext";
 import { addScoreOnStorage } from "../utils/storage";
+import Icon from "react-native-vector-icons/FontAwesome5";
 
-export default function Game() {
+export default function Game(props) {
   // cards
   const cards = randomCards();
   const [board, setBoard] = useState(() => shuffle([...cards, ...cards]));
   const [selectedCard, setSelectedCard] = useState([]);
   const [matchedCards, setMatchedCards] = useState([]);
+  const [exit, setExit] = useState(false);
   const { score, points, name } = useStateContext();
+  // navigation with props
+  const { navigation } = props;
+  // navigation bar
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <Icon
+          name="arrow-left"
+          color="#fff"
+          size={20}
+          style={{ marginLeft: 10 }}
+          onPress={() => setExit(true)}
+        />
+      ),
+    });
+  }, [navigation]);
 
   const handleTapCard = (index) => {
     if (selectedCard.length >= 2 || selectedCard.includes(index)) return;
