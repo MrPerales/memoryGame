@@ -8,6 +8,7 @@ import ModalWin from "../components/ModalWin";
 import useStateContext from "../hooks/useStateContext";
 import { addScoreOnStorage } from "../utils/storage";
 import Icon from "react-native-vector-icons/FontAwesome5";
+import ModalExit from "../components/ModalExit";
 
 export default function Game(props) {
   // cards
@@ -121,6 +122,20 @@ export default function Game(props) {
       >
         <View style={styles.modalView}>
           <ModalWin resetGame={resetGame} />
+        </View>
+      </Modal>
+      {/* if player press arrow left to back */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        // visible={exit}
+        visible={true}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed");
+        }}
+      >
+        <View style={styles.modalView}>
+          <ModalExit points={points} />
         </View>
       </Modal>
     </View>
