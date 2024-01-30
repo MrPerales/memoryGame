@@ -128,8 +128,8 @@ export default function Game(props) {
       <Modal
         animationType="fade"
         transparent={true}
-        // visible={exit}
-        visible={true}
+        visible={exit}
+        // visible={true}
         onRequestClose={() => {
           Alert.alert("Modal has been closed");
         }}
