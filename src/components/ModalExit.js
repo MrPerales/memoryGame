@@ -1,9 +1,12 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import React from "react";
+import useStateContext from "../hooks/useStateContext";
 
-export default function ModalExit() {
-  const gotoHome = () => {
-    // go to home
+export default function ModalExit({ gotoHome }) {
+  const { setOpenModalExit } = useStateContext();
+
+  const cancelExit = () => {
+    setOpenModalExit(false);
   };
   return (
     <View style={styles.modalInformation}>
@@ -14,7 +17,7 @@ export default function ModalExit() {
         <Pressable style={styles.pressable} onPress={gotoHome}>
           <Text style={styles.txtButton}>Yes</Text>
         </Pressable>
-        <Pressable style={styles.pressable}>
+        <Pressable style={styles.pressable} onPress={cancelExit}>
           <Text style={styles.txtButton}>No</Text>
         </Pressable>
       </View>

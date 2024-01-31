@@ -16,12 +16,26 @@ export default function Game(props) {
   const [board, setBoard] = useState(() => shuffle([...cards, ...cards]));
   const [selectedCard, setSelectedCard] = useState([]);
   const [matchedCards, setMatchedCards] = useState([]);
-  const [exit, setExit] = useState(false);
-  const { score, points, name } = useStateContext();
+  const { score, points, name, openModalExit, setOpenModalExit } =
+    useStateContext();
+  const initialValuesGame = () => {
+    setBoard(() => shuffle([...cards, ...cards]));
+    setSelectedCard([]);
+    setMatchedCards([]);
+    points(0);
+  };
   // navigation with props
   const { navigation } = props;
-  // navigation bar
-
+  const gotoHome = () => {
+    initialValuesGame();
+    setOpenModalExit(false);
+    navigation.navigate("Home");
+    //show tabBar again
+    navigation.getParent().setOptions({
+      tabBarStyle: { display: "flex", backgroundColor: "#1d1d1d" },
+    });
+  };
+  // navigation bar Top
   useEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
@@ -30,10 +44,12 @@ export default function Game(props) {
           color="#fff"
           size={20}
           style={{ marginLeft: 10 }}
-          onPress={() => setExit(true)}
+          onPress={() => setOpenModalExit(true)}
         />
       ),
     });
+    // hidden tabBar
+    navigation.getParent().setOptions({ tabBarStyle: { display: "none" } });
   }, [navigation]);
 
   const handleTapCard = (index) => {
@@ -44,10 +60,7 @@ export default function Game(props) {
   const didPlayerWin = matchedCards.length === board.length ? true : false;
   const resetGame = () => {
     addScoreOnStorage(name, score);
-    setBoard(() => shuffle([...cards, ...cards]));
-    setSelectedCard([]);
-    setMatchedCards([]);
-    points(0);
+    initialValuesGame();
   };
   useEffect(() => {
     if (selectedCard.length < 2) return;
@@ -128,14 +141,14 @@ export default function Game(props) {
       <Modal
         animationType="fade"
         transparent={true}
-        visible={exit}
+        visible={openModalExit}
         // visible={true}
         onRequestClose={() => {
           Alert.alert("Modal has been closed");
         }}
       >
         <View style={styles.modalView}>
-          <ModalExit points={points} />
+          <ModalExit points={points} gotoHome={gotoHome} />
         </View>
       </Modal>
     </View>
