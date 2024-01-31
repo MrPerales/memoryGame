@@ -33,7 +33,7 @@ export default function ModalWin({ resetGame }) {
           placeholder="nickname"
           style={styles.TxtInput}
           maxLength={3}
-          value={name}
+          // value={name}
           onChangeText={(name) => setName(name)}
         />
       </View>
