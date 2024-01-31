@@ -1,15 +1,25 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import React from "react";
+import { View, Text, StyleSheet, Pressable, Animated } from "react-native";
+import { useEffect, useRef } from "react";
 import useStateContext from "../hooks/useStateContext";
 
 export default function ModalExit({ gotoHome }) {
   const { setOpenModalExit } = useStateContext();
-
   const cancelExit = () => {
     setOpenModalExit(false);
   };
+  // animations
+  const modalAnimated = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    Animated.timing(modalAnimated, {
+      toValue: 3,
+      duration: 1500,
+      useNativeDriver: true,
+    }).start();
+  }, [modalAnimated]);
   return (
-    <View style={styles.modalInformation}>
+    <Animated.View
+      style={[styles.modalInformation, { opacity: modalAnimated }]}
+    >
       <View>
         <Text style={styles.txtModal}>Are you sure you want to quit ?</Text>
       </View>
@@ -21,7 +31,7 @@ export default function ModalExit({ gotoHome }) {
           <Text style={styles.txtButton}>No</Text>
         </Pressable>
       </View>
-    </View>
+    </Animated.View>
   );
 }
 const styles = StyleSheet.create({
@@ -50,14 +60,14 @@ const styles = StyleSheet.create({
   },
   pressable: {
     width: 100,
+    borderRadius: 20,
+    borderWidth: 5,
+    borderColor: "#2d2d2d",
   },
   txtButton: {
-    color: "#fff",
+    color: "#bb86fc",
     textAlign: "center",
     fontFamily: "pokemonSolidNormal",
     fontSize: 16,
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: "#fff",
   },
 });
